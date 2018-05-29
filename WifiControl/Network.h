@@ -288,6 +288,7 @@ public:
     }
     Config(const Config& copy) : _comController(copy._comController), _ssid(copy._ssid) {
         ASSERT(_comController.IsValid() == true);
+        CopyProperties (copy);
     }
     ~Config() {
     }
@@ -295,6 +296,8 @@ public:
     Config& operator= (const Config& rhs) {
         _comController = rhs._comController;
         _ssid = rhs._ssid;
+
+        CopyProperties (rhs);
 
         return (*this);
     }
@@ -354,6 +357,8 @@ public:
 protected: 
     bool GetKey(const string& key, string& value) const;
     bool SetKey(const string& key, const string& value);
+
+    void CopyProperties (const Config& copy);
 
 private:
     Core::ProxyType<Controller> _comController; 
